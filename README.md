@@ -1,53 +1,76 @@
-# Claude Builders Bounty 🤖
+# Changelog Generator
 
-> A community bounty board for Claude Code builders.
+Auto-generate structured `CHANGELOG.md` from git history.
 
-Building with Claude Code? Have tasks to delegate?
-Want to get paid for contributing to AI projects?
-You're in the right place.
+## Quick Start (3 steps)
+
+```bash
+# 1. Make executable
+chmod +x generate-changelog.sh
+
+# 2. Run (auto-detects latest git tag)
+./generate-changelog.sh
+
+# 3. Or specify a starting tag
+./generate-changelog.sh v1.0.0
+```
+
+## What it does
+
+- Fetches all commits since the last git tag (or a tag you specify)
+- Auto-categorizes commits into:
+  - **Added** — `feat:`, `add:`, `new:`, `introduce:`
+  - **Fixed** — `fix:`, `bug:`, `patch:`, `hotfix:`
+  - **Changed** — `refactor:`, `chore:`, `docs:`, `perf:`, `ci:`, `test:`, `style:`, `build:`, `revert:`, `update:`, `improve:`
+  - **Removed** — `remove:`, `delete:`, `drop:`, `deprecate:`
+- Outputs a clean `CHANGELOG.md` with commit counts and a GitHub compare link
+- Skips merge commits automatically
+- Works with any git repo
+
+## Example Output
+
+```markdown
+# Changelog
+
+## [Unreleased] — 2026-05-14
+
+> 42 commits since `v1.0.0`
+
+### Added (12)
+
+- feat: add user authentication module (a1b2c3d)
+- add: support for dark mode toggle (e4f5g6h)
+
+### Fixed (8)
+
+- fix: login redirect preserves ?next= parameter (i7j8k9l)
+- bug: correct timezone offset in timestamps (m0n1o2p)
+
+### Changed (20)
+
+- refactor: extract auth middleware into separate module (q3r4s5t)
+- docs: update API documentation for v2 endpoints (u6v7w8x)
+
+### Removed (2)
+
+- remove: deprecated /v1/legacy endpoint (y9z0a1b)
 
 ---
 
-## How it works
+📦 [View on GitHub](https://github.com/user/repo/compare/v1.0.0...HEAD)
+```
 
-**To post a bounty**
-1. Open a GitHub issue with a clear description and acceptance criteria
-2. Comment `/opire create $XXX` in the issue to set the reward
-3. Share the link — contributors will find it
+## Requirements
 
-**To claim a bounty**
-1. Browse the open issues below
-2. Comment `/opire try` in the issue you want to work on
-3. Submit a PR — payment is automatic on merge ✅
+- `git` (any version)
+- `bash` (any version)
+- Works on Linux, macOS, WSL
 
----
+## Options
 
-## Active Bounties
+```
+./generate-changelog.sh [since_tag] [output_file]
 
-| # | Task | Amount | Status |
-|---|------|--------|--------|
-| [#1](../../issues/1) | SKILL: Generate a CHANGELOG from git history | $50 | 🟢 Open |
-| [#2](../../issues/2) | TEMPLATE: CLAUDE.md for a Next.js + SQLite project | $75 | 🟢 Open |
-| [#3](../../issues/3) | HOOK: Block destructive bash commands in Claude Code | $100 | 🟢 Open |
-| [#4](../../issues/4) | AGENT: PR reviewer with structured Markdown output | $150 | 🟢 Open |
-| [#5](../../issues/5) | WORKFLOW: n8n + Claude API — automated weekly dev summary | $200 | 🟢 Open |
-
----
-
-## Rules
-
-- Tasks must be related to Claude Code or AI tooling
-- Every issue must have clear acceptance criteria before a bounty is activated
-- Payment is handled by [Opire](https://opire.dev) (Stripe)
-- Quality over speed — a solid PR beats a fast one
-
----
-
-## Community
-
-- 🐦 X: [@ClaudeBounty](https://x.com/ClaudeBounty)
-- 📧 Contact: claudebounty@gmail.com
-
----
-
-*Started by the Claude builder community · March 2026 · MIT License*
+  since_tag     Tag to start from (default: latest git tag)
+  output_file   Where to write (default: CHANGELOG.md)
+```
